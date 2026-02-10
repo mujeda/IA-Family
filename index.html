@@ -1,0 +1,1158 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>IA Responsable: Guía para Familias | Mirasur</title>
+    <meta name="description"
+        content="Acción de sensibilización y formación en IA para familias en coordinación con el colegio.">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+    <style>
+        :root {
+            --primary: #0ea5e9;
+            --primary-dark: #0284c7;
+            --secondary: #6366f1;
+            --accent: #f59e0b;
+            --background: #0f172a;
+            --surface: #1e293b;
+            --surface-light: #334155;
+            --text-main: #f8fafc;
+            --text-dim: #94a3b8;
+            --success: #22c55e;
+            --error: #ef4444;
+            --glass: rgba(30, 41, 59, 0.7);
+            --glass-border: rgba(255, 255, 255, 0.1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: var(--background);
+            color: var(--text-main);
+            line-height: 1.6;
+            overflow-x: hidden;
+        }
+
+        /* --- Animations --- */
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(20px);
+            }
+
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .animate-fade {
+            animation: fadeIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .delay-1 {
+            animation-delay: 0.2s;
+            opacity: 0;
+        }
+
+        .delay-2 {
+            animation-delay: 0.4s;
+            opacity: 0;
+        }
+
+        .delay-3 {
+            animation-delay: 0.6s;
+            opacity: 0;
+        }
+
+        /* --- Layout --- */
+        .container {
+            max-width: 1100px;
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        header {
+            padding: 2rem 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            background: rgba(15, 23, 42, 0.8);
+            backdrop-filter: blur(12px);
+            border-bottom: 1px solid var(--glass-border);
+        }
+
+        .header-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 2rem;
+        }
+
+        .branding {
+            display: flex;
+            align-items: center;
+            gap: 1.5rem;
+        }
+
+        .branding img {
+            height: 40px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .line-divider {
+            display: none;
+        }
+
+        @media (max-width: 600px) {
+            .branding {
+                gap: 0.75rem;
+            }
+
+            .branding img {
+                height: 30px;
+            }
+
+            .progress-container {
+                display: none;
+            }
+        }
+
+        .logo {
+            font-weight: 700;
+            font-size: 1.5rem;
+            color: var(--primary);
+            text-decoration: none;
+            display: flex;
+            align-items: center;
+            gap: 0.5rem;
+        }
+
+        .progress-container {
+            flex: 1;
+            max-width: 300px;
+            margin-left: 2rem;
+        }
+
+        .progress-bar {
+            height: 8px;
+            background: var(--surface-light);
+            border-radius: 4px;
+            overflow: hidden;
+        }
+
+        #task-progress {
+            height: 100%;
+            width: 0%;
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            transition: width 0.5s ease;
+        }
+
+        .progress-text {
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            margin-top: 0.4rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* --- Hero --- */
+        .hero {
+            padding: 8rem 0 4rem;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -100px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 600px;
+            height: 600px;
+            background: radial-gradient(circle, rgba(14, 165, 233, 0.15) 0%, transparent 70%);
+            z-index: -1;
+        }
+
+        .badge-main {
+            display: inline-block;
+            padding: 0.5rem 1rem;
+            background: rgba(14, 165, 233, 0.1);
+            border: 1px solid var(--primary);
+            color: var(--primary);
+            border-radius: 2rem;
+            font-size: 0.875rem;
+            font-weight: 600;
+            margin-bottom: 1.5rem;
+        }
+
+        h1 {
+            font-size: 3.5rem;
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 1.5rem;
+            letter-spacing: -0.02em;
+        }
+
+        h1 span {
+            background: linear-gradient(90deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+
+        .hero-desc {
+            font-size: 1.25rem;
+            color: var(--text-dim);
+            max-width: 700px;
+            margin: 0 auto 3rem;
+        }
+
+        /* --- Píldoras Section --- */
+        .pildoras {
+            padding: 4rem 0;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 4rem;
+        }
+
+        .pildora-card {
+            background: var(--glass);
+            border: 1px solid var(--glass-border);
+            border-radius: 1.5rem;
+            padding: 2.5rem;
+            margin-bottom: 4rem;
+            display: grid;
+            grid-template-columns: 1.2fr 1fr;
+            gap: 3rem;
+            transition: transform 0.3s ease, border-color 0.3s ease;
+        }
+
+        @media (max-width: 900px) {
+            .pildora-card {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        .video-wrapper {
+            position: relative;
+            padding-bottom: 56.25%;
+            /* 16:9 */
+            border-radius: 1rem;
+            overflow: hidden;
+            background: #000;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.3);
+        }
+
+        .video-placeholder {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            background: linear-gradient(135deg, #1e293b 0%, #0f172a 100%);
+            color: var(--text-dim);
+        }
+
+        .video-placeholder i {
+            font-size: 3rem;
+            margin-bottom: 1rem;
+        }
+
+        .pildora-info h2 {
+            font-size: 2rem;
+            margin-bottom: 1.5rem;
+            color: var(--primary);
+        }
+
+        .pildora-info p {
+            margin-bottom: 2rem;
+            color: var(--text-dim);
+        }
+
+        .pildora-actions {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 0.75rem;
+            padding: 0.8rem 1.5rem;
+            border-radius: 0.75rem;
+            font-weight: 600;
+            text-decoration: none;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: none;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--surface-light);
+            color: var(--text-main);
+        }
+
+        .btn-outline:hover {
+            background: var(--surface-light);
+        }
+
+        .btn-success {
+            background: var(--success);
+            color: white;
+        }
+
+        /* --- Quiz Modal --- */
+        #quiz-overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(15, 23, 42, 0.9);
+            backdrop-filter: blur(8px);
+            z-index: 1000;
+            display: none;
+            justify-content: center;
+            align-items: center;
+            padding: 1rem;
+        }
+
+        .quiz-modal {
+            background: var(--surface);
+            max-width: 650px;
+            width: 100%;
+            border-radius: 1.5rem;
+            padding: 3rem;
+            position: relative;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.5);
+            border: 1px solid var(--glass-border);
+        }
+
+        .close-quiz {
+            position: absolute;
+            top: 1.5rem;
+            right: 1.5rem;
+            background: none;
+            border: none;
+            color: var(--text-dim);
+            font-size: 1.5rem;
+            cursor: pointer;
+        }
+
+        .quiz-content h3 {
+            font-size: 1.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .question-text {
+            font-size: 1.125rem;
+            margin-bottom: 2rem;
+            font-weight: 500;
+        }
+
+        .options-list {
+            display: grid;
+            gap: 1rem;
+        }
+
+        .option-item {
+            padding: 1.25rem;
+            background: var(--surface-light);
+            border: 2px solid transparent;
+            border-radius: 1rem;
+            cursor: pointer;
+            transition: all 0.2s ease;
+        }
+
+        .option-item:hover {
+            background: rgba(14, 165, 233, 0.1);
+            border-color: var(--primary);
+        }
+
+        .option-item.selected {
+            background: rgba(14, 165, 233, 0.2);
+            border-color: var(--primary);
+        }
+
+        .option-item.correct {
+            background: rgba(34, 197, 94, 0.2);
+            border-color: var(--success);
+        }
+
+        .option-item.wrong {
+            background: rgba(239, 68, 68, 0.2);
+            border-color: var(--error);
+        }
+
+        /* --- Matching Question Styles --- */
+        .matching-container {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+        }
+
+        .match-pair {
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
+        }
+
+        /* --- Gamification Extras --- */
+        .points-badge {
+            position: fixed;
+            bottom: 2rem;
+            right: 2rem;
+            background: var(--surface);
+            border: 2px solid var(--primary);
+            padding: 1rem 2rem;
+            border-radius: 3rem;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.5);
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+            z-index: 500;
+        }
+
+        .points-badge span {
+            color: var(--primary);
+            font-size: 1.5rem;
+        }
+
+        /* --- Resources --- */
+        /* Mesa Redonda Section */
+        .mesa-redonda {
+            padding: 5rem 0;
+            background: linear-gradient(180deg, rgba(15, 23, 42, 0) 0%, rgba(30, 41, 59, 0.3) 100%);
+        }
+
+        .quote-box {
+            background: var(--glass-bg);
+            -webkit-backdrop-filter: blur(12px);
+            backdrop-filter: blur(12px);
+            border: 1px solid var(--glass-border);
+            border-left: 4px solid var(--primary);
+            padding: 3rem;
+            border-radius: 1.5rem;
+            margin-bottom: 4rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .quote-box::after {
+            content: '"';
+            position: absolute;
+            top: -20px;
+            right: 20px;
+            font-size: 150px;
+            color: var(--primary);
+            opacity: 0.1;
+            font-family: serif;
+        }
+
+        .quote-box p {
+            font-size: 1.4rem;
+            line-height: 1.6;
+            color: white;
+            font-weight: 300;
+            font-style: italic;
+        }
+
+        .discussion-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 2rem;
+        }
+
+        .discussion-card {
+            background: var(--glass-bg);
+            border: 1px solid var(--glass-border);
+            padding: 2rem;
+            border-radius: 1.25rem;
+            transition: all 0.3s ease;
+        }
+
+        .discussion-card:hover {
+            border-color: var(--secondary);
+            transform: translateY(-5px);
+            background: rgba(30, 41, 59, 0.5);
+        }
+
+        .discussion-card h4 {
+            color: var(--secondary);
+            margin-bottom: 1rem;
+            font-size: 1.1rem;
+            display: flex;
+            align-items: center;
+            gap: 0.75rem;
+        }
+
+        .discussion-card h4::before {
+            content: "?";
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            background: var(--secondary);
+            color: var(--surface);
+            border-radius: 50%;
+            font-size: 0.8rem;
+            font-weight: 800;
+        }
+
+        .discussion-card p {
+            color: var(--text-dim);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .resources {
+            padding: 6rem 0;
+            background: rgba(30, 41, 59, 0.3);
+        }
+
+        .resource-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .resource-card {
+            background: var(--surface);
+            padding: 2.5rem 2rem;
+            border-radius: 1.25rem;
+            border: 1px solid var(--glass-border);
+            text-decoration: none;
+            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            gap: 1rem;
+        }
+
+        .resource-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            right: 0;
+            width: 120px;
+            height: 120px;
+            background: radial-gradient(circle at top right, rgba(14, 165, 233, 0.1), transparent 70%);
+            z-index: 0;
+        }
+
+        .resource-card:hover {
+            transform: translateY(-8px);
+            border-color: var(--primary);
+            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.3);
+            background: rgba(30, 41, 59, 0.5);
+        }
+
+        .resource-icon {
+            width: 48px;
+            height: 48px;
+            background: rgba(14, 165, 233, 0.1);
+            border-radius: 0.75rem;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: var(--primary);
+            margin-bottom: 0.5rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .resource-card h4 {
+            margin-bottom: 0.5rem;
+            color: white;
+            font-size: 1.25rem;
+            position: relative;
+            z-index: 1;
+        }
+
+        .resource-card p {
+            font-size: 0.95rem;
+            color: var(--text-dim);
+            line-height: 1.5;
+            position: relative;
+            z-index: 1;
+        }
+
+        footer {
+            padding: 5rem 0;
+            text-align: center;
+            border-top: 1px solid var(--glass-border);
+            color: var(--text-dim);
+            font-size: 0.875rem;
+            background: rgba(15, 23, 42, 0.5);
+        }
+
+        .footer-branding {
+            margin-bottom: 2.5rem;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 1.5rem;
+            opacity: 0.8;
+            transition: opacity 0.3s ease;
+        }
+
+        .footer-branding:hover {
+            opacity: 1;
+        }
+
+        .footer-branding img {
+            height: 35px;
+            width: auto;
+        }
+    </style>
+</head>
+
+<body>
+
+    <header>
+        <div class="container header-content">
+            <div class="branding">
+                <img src="https://colegiomirasur.com/wp-content/uploads/sites/92/2023/05/MIRASUR-LOGO-H-NEGATIVO.png"
+                    alt="Colegio Mirasur">
+            </div>
+            <div class="progress-container">
+                <div class="progress-bar">
+                    <div id="task-progress"></div>
+                </div>
+                <div class="progress-text">
+                    <span>Tu Progreso</span>
+                    <span id="progress-percent">0%</span>
+                </div>
+            </div>
+        </div>
+    </header>
+
+    <main>
+        <section class="hero container animate-fade">
+            <span class="badge-main">Mirasur × Familias</span>
+            <h1>Educar en la era de la <span>Inteligencia Artificial</span></h1>
+            <p class="hero-desc">Una acción de sensibilización y formación para familias. Aprende a acompañar a tus
+                hijos de forma responsable, ética y pedagógica en el uso responsable de la inteligencia artificial
+                generativa.</p>
+        </section>
+
+        <section class="pildoras container">
+            <div id="pildoras-list">
+                <!-- Se inyectarán dinámicamente -->
+            </div>
+        </section>
+
+        <section class="mesa-redonda" id="mesa-redonda">
+            <div class="container">
+                <div class="quote-box animate-fade">
+                    <p>
+                        "No necesitan ser expertos en tecnología, solo necesitan ser expertos en sus hijos y estar
+                        presentes en este camino. La IA es la herramienta, pero el padre o el profesor es quien valida
+                        si el niño está razonando o simplemente rellenando huecos… para que el día de mañana, más pronto
+                        que tarde, ellos puedan desarrollar positivamente el uso crítico y aventajado de estas
+                        herramientas."
+                    </p>
+                </div>
+
+                <div class="section-title">
+                    <h2>Mesa Redonda</h2>
+                    <p>Afrontamos las grandes preguntas del acompañamiento familiar.</p>
+                </div>
+
+                <div class="discussion-grid">
+                    <div class="discussion-card animate-fade">
+                        <h4>¿Trampas o Aprendizaje?</h4>
+                        <p>Cómo diferenciar cuando la IA es un facilitador del pensamiento o un sustituto del esfuerzo
+                            cognitivo. Claves para detectar el 'copia y pega' sin sentido.</p>
+                    </div>
+                    <div class="discussion-card animate-fade">
+                        <h4>Herramientas Recomendadas</h4>
+                        <p>Selección de ecosistemas seguros (Gemini, NotebookLM) y cómo configurarlos para un entorno
+                            educativo protegido y productivo.</p>
+                    </div>
+                    <div class="discussion-card animate-fade">
+                        <h4>Límites Sanos</h4>
+                        <p>Establecer marcos de uso: cuándo es el momento de la IA y cuándo el del papel y lápiz.
+                            Equilibrio entre tecnología y habilidades tradicionales.</p>
+                    </div>
+                    <div class="discussion-card animate-fade">
+                        <h4>El Rol de la Familia</h4>
+                        <p>Tú eres el guía ético. Cómo fomentar la curiosidad mientras supervisamos el criterio y la
+                            autoría de nuestros hijos.</p>
+                    </div>
+                    <div class="discussion-card animate-fade">
+                        <h4>Dudas sobre las Píldoras</h4>
+                        <p>Espacio para profundizar en los conceptos técnicos y pedagógicos grabados en las sesiones de
+                            formación.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="resources">
+            <div class="container">
+                <div class="section-title">
+                    <h2>Recursos Extra</h2>
+                    <p>Amplía tus conocimientos con estas guías recomendadas.</p>
+                </div>
+                <div class="resource-grid">
+                    <a href="https://www.commonsensemedia.org/es/articulos/guia-esencial-para-padres-sobre-la-ia-generativa"
+                        target="_blank" rel="noopener" class="resource-card">
+                        <div class="resource-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"></path>
+                                <path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"></path>
+                            </svg>
+                        </div>
+                        <h4>Common Sense Media</h4>
+                        <p>Guía esencial para padres sobre la IA generativa: conceptos clave y consejos de seguridad.
+                        </p>
+                    </a>
+                    <a href="https://youtu.be/GEHEZNo3INg?si=QtAlGYdmY0cYGJi_" target="_blank" rel="noopener"
+                        class="resource-card">
+                        <div class="resource-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polygon points="5 3 19 12 5 21 5 3"></polygon>
+                            </svg>
+                        </div>
+                        <h4>La IA en colegios Cognita</h4>
+                        <p>Descubre cómo el grupo Cognita integra la IA para potenciar el aprendizaje y la innovación en
+                            sus centros educativos.</p>
+                    </a>
+                    <a href="https://services.google.com/fh/files/misc/learnlm_prompt_guide.pdf" target="_blank"
+                        rel="noopener" class="resource-card">
+                        <div class="resource-icon">
+                            <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor"
+                                stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                                <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                            </svg>
+                        </div>
+                        <h4>Guía de Prompting (Google)</h4>
+                        <p>Aprende a comunicarte con la IA: técnicas y estrategias de LearnLM para mejores resultados.
+                        </p>
+                    </a>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <div id="quiz-overlay">
+        <div class="quiz-modal" id="quiz-modal">
+            <button class="close-quiz" onclick="closeQuiz()">&times;</button>
+            <div id="quiz-content" class="quiz-content">
+                <!-- Se inyectará el contenido del quiz -->
+            </div>
+        </div>
+    </div>
+
+    <div class="points-badge">
+        <svg width="24" height="24" viewBox="0 0 24 24" fill="var(--primary)" xmlns="http://www.w3.org/2000/svg">
+            <path
+                d="M12 2L15.09 8.26L22 9.27L17 14.14L18.18 21.02L12 17.77L5.82 21.02L7 14.14L2 9.27L8.91 8.26L12 2Z" />
+        </svg>
+        <span id="user-points">0</span> Puntos
+    </div>
+
+    <footer>
+        <div class="container">
+            <div class="footer-branding">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSE4OjOQf7KUNKIPnJdbrrsrPnfI8Frk6g80A&s"
+                    alt="Cognita">
+            </div>
+            <p>&copy; 2026 Colegio Mirasur - Educación con Sentido Pedagógico</p>
+            <p style="margin-top: 1rem;">Mirasur es parte del grupo Cognita - Una Red Global de Excelencia.</p>
+        </div>
+    </footer>
+
+    <script>
+        const modules = [
+            {
+                id: 1,
+                title: "Resumen: Sesión de Activación y Cambio de Paradigma",
+                description: "Vídeo resumen del evento presencial de activación. Inspirar sobre la oportunidad de la IA como nueva competencia básica. Descubre cómo redefine los trabajos y por qué el pensamiento crítico es nuestro nuevo filtro esencial en esta revolución tecnológica.",
+                videoUrl: "#", // URL de vídeo para embeber (YouTube/Vimeo/etc)
+                pdfUrl: "PROYECTO_Uso_responsable_IA.pdf", // Cambiar por URL externa para máxima compatibilidad
+                questions: [
+                    {
+                        type: "choice",
+                        text: "¿Cuál es la principal diferencia entre Google y una IA Generativa según lo visto?",
+                        options: [
+                            "Google es un bibliotecario que busca; la IA es un 'motor de ideas' que crea a partir de probabilidades.",
+                            "Google es más rápido pero la IA es siempre más veraz.",
+                            "No hay diferencia, ambos buscan en la misma base de datos.",
+                            "La IA es una base de datos gigante y Google no."
+                        ],
+                        correct: 0,
+                        explanation: "La IA no busca información existente, sino que calcula la probabilidad de la siguiente palabra para crear una respuesta nueva."
+                    },
+                    {
+                        type: "matching",
+                        text: "RELACIONAR: Une cada concepto con su definición correcta.",
+                        pairs: [
+                            { key: "IA Tradicional", value: "Sigue reglas para tareas específicas (ej: Siri, recomendaciones Netflix)." },
+                            { key: "IA Generativa", value: "Crea contenido original (textos, arte, música) a partir de datos aprendidos." },
+                            { key: "LLM", value: "Sistema que predice la siguiente palabra basándose en patrones masivos de datos." }
+                        ]
+                    },
+                    {
+                        type: "scenario",
+                        text: "SITUACIÓN: Tu hijo de 12 años está fascinado con una IA para generar imágenes 'graciosas' de sus compañeros. ¿Cuál es la mejor aproximación pedagógica?",
+                        options: [
+                            "Prohibirle el uso de cualquier herramienta de IA de inmediato.",
+                            "Ignorarlo, es solo un juego de niños.",
+                            "Sentarte con él, explicarle qué es un 'Deepfake' y los riesgos éticos de crear imágenes de otros sin consentimiento.",
+                            "Felicitarle por su habilidad tecnológica."
+                        ],
+                        correct: 2,
+                        explanation: "Fomentar la conciencia ética y el respeto es clave en el acompañamiento familiar."
+                    }
+                ]
+            },
+            {
+                id: 2,
+                title: "Píldora 2: Conceptos Básicos y LLMs",
+                description: "Profundizamos en el funcionamiento de la IA. Aprende sobre tokens, la ventana de contexto (memoria a corto plazo) y por qué ocurren las alucinaciones. La importancia de la co-creación y el uso de herramientas seguras como Gemini Advanced para las familias.",
+                videoUrl: "#",
+                pdfUrl: "#",
+                questions: [
+                    {
+                        type: "choice",
+                        text: "¿Qué es un 'Token' en el contexto de la IA?",
+                        options: [
+                            "Una moneda virtual para pagar por el chat.",
+                            "Unidades de texto (palabras o trozos de palabras) que la IA usa como fichas de Lego.",
+                            "Un código secreto de seguridad.",
+                            "La marca de la IA."
+                        ],
+                        correct: 1
+                    },
+                    {
+                        type: "choice",
+                        text: "¿Por qué se dice que la IA 'alucina'?",
+                        options: [
+                            "Porque tiene virus.",
+                            "Está programada para sonar útil y segura, por lo que si no sabe la respuesta, inventa una que parezca lógica basándose en probabilidades.",
+                            "Porque la información en Internet es toda mentira.",
+                            "Es un fallo del hardware."
+                        ],
+                        correct: 1
+                    },
+                    {
+                        type: "scenario",
+                        text: "SITUACIÓN: Un profesor detecta que un trabajo de tu hija parece hecho totalmente por IA. Ella dice que solo la usó 'para ayudar'. ¿Cómo orientar la acción?",
+                        options: [
+                            "Defender a la hija a toda costa ante el colegio.",
+                            "Castigarla sin móvil un mes.",
+                            "Revisar juntos el proceso: ver el prompt enviado, qué parte es copia y dónde está su aporte personal y pensamiento crítico.",
+                            "Decirle que la próxima vez use una IA más difícil de detectar."
+                        ],
+                        correct: 2,
+                        explanation: "La IA debe ser un borrador o asistente; la autoría y el razonamiento deben ser siempre del alumno."
+                    }
+                ]
+            },
+            {
+                id: 3,
+                title: "Píldora 3: Herramientas y Acompañamiento",
+                description: "Guía práctica sobre Gemini y NotebookLM para el estudio. Cómo fomentar el uso responsable evaluando el prompt, verificando la información y asegurando la autoría personal del alumno. Cuándo decir 'NO' si la IA sustituye el razonamiento del niño.",
+                videoUrl: "#",
+                pdfUrl: "#",
+                questions: [
+                    {
+                        type: "choice",
+                        text: "¿Qué ventaja principal ofrece NotebookLM para un estudiante?",
+                        options: [
+                            "Hace los deberes automáticamente sin leer nada.",
+                            "Permite trabajar sobre fuentes específicas (apuntes propios) evitando que la IA invente datos de la red.",
+                            "Sirve solo para hacer dibujos.",
+                            "Es una red social para compartir exámenes."
+                        ],
+                        correct: 1
+                    },
+                    {
+                        type: "choice",
+                        text: "¿Cuál es la 'regla de oro' de la autoría con IA?",
+                        options: [
+                            "Si la IA lo escribe, es mío porque yo puse el prompt.",
+                            "La IA hace el borrador; el alumno revisa, añade opinión, corrige y verifica.",
+                            "No se debe usar IA nunca.",
+                            "Si el profesor no se da cuenta, está bien."
+                        ],
+                        correct: 1
+                    },
+                    {
+                        type: "scenario",
+                        text: "SITUACIÓN: Tu hijo quiere usar IA para resolver problemas de matemáticas porque 'así acaba antes'. Sabes que no ha entendido el tema de clase. ¿Qué haces?",
+                        options: [
+                            "Dejarle que lo haga, así tiene más tiempo para descansar.",
+                            "Hacérselos tú mismo para que aprenda el método.",
+                            "Decir NO: explicar que si la IA sustituye el razonamiento, él no está aprendiendo la competencia necesaria para el examen y el futuro.",
+                            "Obligarle a usar una calculadora vieja."
+                        ],
+                        correct: 2
+                    }
+                ]
+            }
+        ];
+
+        let currentModuleIndex = 0;
+        let currentQuestionIndex = 0;
+        let userProgress = JSON.parse(localStorage.getItem('ia-family-progress')) || {
+            completedModules: [],
+            points: 0
+        };
+
+        function init() {
+            renderModules();
+            updateUI();
+        }
+
+        function renderModules() {
+            const list = document.getElementById('pildoras-list');
+            list.innerHTML = modules.map((m, index) => {
+                const isCompleted = userProgress.completedModules.includes(m.id);
+                return `
+                    <div class="pildora-card animate-fade delay-${(index % 3) + 1}">
+                        <div class="video-wrapper">
+                            <div class="video-placeholder">
+                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                                <span>Video Píldora ${m.id}</span>
+                            </div>
+                        </div>
+                        <div class="pildora-info">
+                            <h2>${m.id}. ${m.title}</h2>
+                            <p>${m.description}</p>
+                            <div class="pildora-actions">
+                                <button onclick="startQuiz(${index})" class="btn ${isCompleted ? 'btn-success' : 'btn-primary'}">
+                                    ${isCompleted ? 'Volver a hacer Test' : 'Realizar Cuestionario'}
+                                </button>
+                                <a href="${m.pdfUrl}" class="btn btn-outline">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                                    Entregable .pdf
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                `;
+            }).join('');
+        }
+
+        function updateUI() {
+            const percent = Math.round((userProgress.completedModules.length / modules.length) * 100);
+            document.getElementById('task-progress').style.width = percent + '%';
+            document.getElementById('progress-percent').innerText = percent + '%';
+            document.getElementById('user-points').innerText = userProgress.points;
+
+            // Re-render modules to update button states
+            // renderModules(); // Evitar loop si se llama desde aquí, mejor llamar solo al completar
+        }
+
+        function startQuiz(index) {
+            currentModuleIndex = index;
+            currentQuestionIndex = 0;
+            const overlay = document.getElementById('quiz-overlay');
+            overlay.style.display = 'flex';
+            renderQuestion();
+        }
+
+        function closeQuiz() {
+            document.getElementById('quiz-overlay').style.display = 'none';
+        }
+
+        function renderQuestion() {
+            const module = modules[currentModuleIndex];
+            const q = module.questions[currentQuestionIndex];
+            const content = document.getElementById('quiz-content');
+
+            content.innerHTML = `
+                <div style="margin-bottom: 1rem; color: var(--primary); font-weight: 600;">
+                    Píldora ${module.id} - Pregunta ${currentQuestionIndex + 1} de ${module.questions.length}
+                </div>
+                <div class="question-text">${q.text}</div>
+                <div id="quiz-interaction-area"></div>
+                <div id="quiz-feedback" style="margin-top: 2rem; display: none; padding: 1.5rem; border-radius: 1rem;"></div>
+            `;
+
+            const area = document.getElementById('quiz-interaction-area');
+            if (q.type === 'choice' || q.type === 'scenario') {
+                area.innerHTML = `<div class="options-list">
+                    ${q.options.map((opt, i) => `
+                        <div class="option-item" onclick="checkAnswer(${i})">${opt}</div>
+                    `).join('')}
+                </div>`;
+            } else if (q.type === 'matching') {
+                const keys = q.pairs.map(p => p.key).sort(() => Math.random() - 0.5);
+                const values = q.pairs.map(p => p.value).sort(() => Math.random() - 0.5);
+                let selectedKey = null;
+
+                area.innerHTML = `
+                    <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                        <div id="matching-keys" class="options-list">
+                            ${keys.map(k => `<div class="option-item matching-key" onclick="selectMatchKey(this, '${k}')">${k}</div>`).join('')}
+                        </div>
+                        <div id="matching-values" class="options-list">
+                            ${values.map(v => `<div class="option-item matching-value" onclick="selectMatchValue(this, '${v}')">${v}</div>`).join('')}
+                        </div>
+                    </div>
+                `;
+            }
+        }
+
+        let selectedMatchKey = null;
+        let matchedCount = 0;
+
+        function selectMatchKey(el, key) {
+            document.querySelectorAll('.matching-key').forEach(k => k.classList.remove('selected'));
+            el.classList.add('selected');
+            selectedMatchKey = { el, key };
+        }
+
+        function selectMatchValue(el, value) {
+            if (!selectedMatchKey) {
+                alert("Selecciona primero un concepto de la izquierda.");
+                return;
+            }
+
+            const q = modules[currentModuleIndex].questions[currentQuestionIndex];
+            const pair = q.pairs.find(p => p.key === selectedMatchKey.key);
+
+            if (pair.value === value) {
+                // Correct match
+                selectedMatchKey.el.classList.replace('selected', 'correct');
+                selectedMatchKey.el.style.pointerEvents = 'none';
+                el.classList.add('correct');
+                el.style.pointerEvents = 'none';
+                matchedCount++;
+                selectedMatchKey = null;
+
+                if (matchedCount === q.pairs.length) {
+                    showMatchingFeedback(true);
+                }
+            } else {
+                // Wrong match
+                el.classList.add('wrong');
+                setTimeout(() => el.classList.remove('wrong'), 500);
+            }
+        }
+
+        function showMatchingFeedback(success) {
+            const feedback = document.getElementById('quiz-feedback');
+            feedback.innerHTML = `<span style="color: var(--success); font-weight: bold;">¡Excelente! has relacionado todos correctamente.</span>`;
+            feedback.style.background = 'rgba(34, 197, 94, 0.1)';
+            feedback.style.display = 'block';
+            userProgress.points += 20;
+
+            const nextBtn = document.createElement('button');
+            nextBtn.className = 'btn btn-primary';
+            nextBtn.style.marginTop = '1.5rem';
+            nextBtn.innerText = currentQuestionIndex < modules[currentModuleIndex].questions.length - 1 ? 'Siguiente Pregunta' : 'Finalizar Cuestionario';
+            nextBtn.onclick = () => { matchedCount = 0; nextQuestion(); };
+            feedback.appendChild(nextBtn);
+            saveProgress();
+        }
+
+        function checkAnswer(i) {
+            const q = modules[currentModuleIndex].questions[currentQuestionIndex];
+            const feedback = document.getElementById('quiz-feedback');
+            const options = document.querySelectorAll('.option-item');
+
+            if (feedback.style.display === 'block') return; // Evitar doble click
+
+            options.forEach(opt => opt.style.pointerEvents = 'none');
+
+            if (i === q.correct) {
+                options[i].classList.add('correct');
+                feedback.innerHTML = `<span style="color: var(--success); font-weight: bold;">¡Correcto!</span> <br> ${q.explanation || ''}`;
+                feedback.style.background = 'rgba(34, 197, 94, 0.1)';
+                userProgress.points += 10;
+            } else {
+                options[i].classList.add('wrong');
+                options[q.correct].classList.add('correct');
+                feedback.innerHTML = `<span style="color: var(--error); font-weight: bold;">No es correcto.</span> <br> La respuesta correcta era: <em>${q.options[q.correct]}</em>. ${q.explanation || ''}`;
+                feedback.style.background = 'rgba(239, 68, 68, 0.1)';
+            }
+
+            feedback.style.display = 'block';
+
+            const nextBtn = document.createElement('button');
+            nextBtn.className = 'btn btn-primary';
+            nextBtn.style.marginTop = '1.5rem';
+            nextBtn.innerText = currentQuestionIndex < modules[currentModuleIndex].questions.length - 1 ? 'Siguiente Pregunta' : 'Finalizar Cuestionario';
+            nextBtn.onclick = nextQuestion;
+            feedback.appendChild(nextBtn);
+
+            saveProgress();
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < modules[currentModuleIndex].questions.length) {
+                renderQuestion();
+            } else {
+                completeModule();
+            }
+        }
+
+        function completeModule() {
+            const moduleId = modules[currentModuleIndex].id;
+            if (!userProgress.completedModules.includes(moduleId)) {
+                userProgress.completedModules.push(moduleId);
+                userProgress.points += 50; // Bonus por completar
+            }
+            saveProgress();
+            closeQuiz();
+            renderModules();
+            updateUI();
+
+            if (userProgress.completedModules.length === modules.length) {
+                alert("¡Enhorabuena! Has completado todo el itinerario formativo de IA para familias.");
+            }
+        }
+
+        function saveProgress() {
+            localStorage.setItem('ia-family-progress', JSON.stringify(userProgress));
+            document.getElementById('user-points').innerText = userProgress.points;
+        }
+
+        window.onload = init;
+    </script>
+</body>
+
+</html>
