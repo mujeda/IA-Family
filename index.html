@@ -856,7 +856,8 @@
                 title: "Resumen: Sesión de Activación y Cambio de Paradigma",
                 description: "Vídeo resumen del evento presencial de activación. Inspirar sobre la oportunidad de la IA como nueva competencia básica. Descubre cómo redefine los trabajos y por qué el pensamiento crítico es nuestro nuevo filtro esencial en esta revolución tecnológica.",
                 videoUrl: "https://youtu.be/GEHEZNo3INg",
-                pdfUrl: "PROYECTO_Uso_responsable_IA.pdf", // Cambiar por URL externa para máxima compatibilidad
+                pdfUrl: "Recursos/IA con familias 2025-2026 - Piloto.pdf",
+                releaseDate: "2025-01-01", // Ya disponible
                 questions: [
                     {
                         type: "choice",
@@ -898,7 +899,8 @@
                 title: "Conceptos básicos sobre la IA",
                 description: "Profundizamos en el funcionamiento de la IA. Aprende sobre tokens, la ventana de contexto (memoria a corto plazo) y por qué ocurren las alucinaciones. La importancia de la co-creación y el uso de herramientas seguras.",
                 videoUrl: "https://youtu.be/yTm4UMbL5Vw",
-                pdfUrl: "#",
+                pdfUrl: null,
+                releaseDate: "2026-02-24",
                 questions: [
                     {
                         type: "choice",
@@ -941,7 +943,8 @@
                 title: "Herramientas de IA",
                 description: "Guía práctica sobre Gemini y NotebookLM para el estudio. Cómo fomentar el uso responsable evaluando el prompt, verificando la información y asegurando la autoría personal del alumno.",
                 videoUrl: "https://youtu.be/KPOCfWGXVnk",
-                pdfUrl: "#",
+                pdfUrl: null,
+                releaseDate: "2026-02-24",
                 questions: [
                     {
                         type: "choice",
@@ -972,7 +975,8 @@
                 title: "Cómo acompañar a nuestros hijos",
                 description: "Estrategias para padres sobre el acompañamiento en la era digital. Cómo establecer límites saludables, fomentar la curiosidad ética y ser el guía que necesitan en el uso de nuevas tecnologías.",
                 videoUrl: "https://youtu.be/JV9fXmDY47A",
-                pdfUrl: "#",
+                pdfUrl: null,
+                releaseDate: "2026-03-06",
                 questions: [
                     {
                         type: "choice",
@@ -1014,8 +1018,13 @@
 
         function renderModules() {
             const list = document.getElementById('pildoras-list');
+            const now = new Date();
+
             list.innerHTML = modules.map((m, index) => {
                 const isCompleted = userProgress.completedModules.includes(m.id);
+                const releaseDate = new Date(m.releaseDate);
+                const isLocked = now < releaseDate;
+
                 let videoHTML = `
                     <div class="video-placeholder">
                         <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
@@ -1023,7 +1032,16 @@
                     </div>
                 `;
 
-                if (m.videoUrl && m.videoUrl !== "#") {
+                if (isLocked) {
+                    const formattedDate = releaseDate.toLocaleDateString('es-ES', { day: '2-digit', month: '2-digit', year: 'numeric' });
+                    videoHTML = `
+                        <div class="video-placeholder" style="background: linear-gradient(135deg, #334155 0%, #0f172a 100%);">
+                            <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="var(--text-dim)" stroke-width="2"><rect x="3" y="11" width="18" height="11" rx="2" ry="2"></rect><path d="M7 11V7a5 5 0 0 1 10 0v4"></path></svg>
+                            <span style="margin-top:1rem; font-weight:600; color: var(--text-main);">Disponible el ${formattedDate}</span>
+                            <span style="font-size:0.85rem; color: var(--text-dim);">Próximamente</span>
+                        </div>
+                    `;
+                } else if (m.videoUrl && m.videoUrl !== "#") {
                     const videoId = m.videoUrl.split('/').pop().split('?')[0].split('=').pop();
                     videoHTML = `
                         <iframe 
@@ -1035,8 +1053,16 @@
                     `;
                 }
 
+                // Lógica de botones PDF: Solo para la píldora 1
+                const pdfButton = (m.id === 1 && m.pdfUrl) ? `
+                    <a href="${m.pdfUrl}" class="btn btn-outline" target="_blank">
+                        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
+                        IA con familias 2025-2026 - Piloto
+                    </a>
+                ` : '';
+
                 return `
-                    <div class="pildora-card animate-fade delay-${(index % 3) + 1}">
+                    <div class="pildora-card animate-fade delay-${(index % 3) + 1}" style="${isLocked ? 'opacity: 0.8;' : ''}">
                         <div class="video-wrapper">
                             ${videoHTML}
                         </div>
@@ -1044,13 +1070,10 @@
                             <h2>${m.id}. ${m.title}</h2>
                             <p>${m.description}</p>
                             <div class="pildora-actions">
-                                <button onclick="startQuiz(${index})" class="btn ${isCompleted ? 'btn-success' : 'btn-primary'}">
-                                    ${isCompleted ? 'Volver a hacer Test' : 'Realizar Cuestionario'}
+                                <button onclick="startQuiz(${index})" class="btn ${isCompleted ? 'btn-success' : (isLocked ? 'btn-outline' : 'btn-primary')}" ${isLocked ? 'disabled' : ''}>
+                                    ${isLocked ? 'Bloqueado' : (isCompleted ? 'Volver a hacer Test' : 'Realizar Cuestionario')}
                                 </button>
-                                <a href="${m.pdfUrl}" class="btn btn-outline">
-                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path><polyline points="7 10 12 15 17 10"></polyline><line x1="12" y1="15" x2="12" y2="3"></line></svg>
-                                    Entregable .pdf
-                                </a>
+                                ${pdfButton}
                             </div>
                         </div>
                     </div>
