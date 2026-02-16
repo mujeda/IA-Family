@@ -855,7 +855,7 @@
                 id: 1,
                 title: "Resumen: Sesión de Activación y Cambio de Paradigma",
                 description: "Vídeo resumen del evento presencial de activación. Inspirar sobre la oportunidad de la IA como nueva competencia básica. Descubre cómo redefine los trabajos y por qué el pensamiento crítico es nuestro nuevo filtro esencial en esta revolución tecnológica.",
-                videoUrl: "#", // URL de vídeo para embeber (YouTube/Vimeo/etc)
+                videoUrl: "https://youtu.be/GEHEZNo3INg",
                 pdfUrl: "PROYECTO_Uso_responsable_IA.pdf", // Cambiar por URL externa para máxima compatibilidad
                 questions: [
                     {
@@ -895,9 +895,9 @@
             },
             {
                 id: 2,
-                title: "Píldora 2: Conceptos Básicos y LLMs",
-                description: "Profundizamos en el funcionamiento de la IA. Aprende sobre tokens, la ventana de contexto (memoria a corto plazo) y por qué ocurren las alucinaciones. La importancia de la co-creación y el uso de herramientas seguras como Gemini Advanced para las familias.",
-                videoUrl: "#",
+                title: "Conceptos básicos sobre la IA",
+                description: "Profundizamos en el funcionamiento de la IA. Aprende sobre tokens, la ventana de contexto (memoria a corto plazo) y por qué ocurren las alucinaciones. La importancia de la co-creación y el uso de herramientas seguras.",
+                videoUrl: "https://youtu.be/yTm4UMbL5Vw",
                 pdfUrl: "#",
                 questions: [
                     {
@@ -938,9 +938,9 @@
             },
             {
                 id: 3,
-                title: "Píldora 3: Herramientas y Acompañamiento",
-                description: "Guía práctica sobre Gemini y NotebookLM para el estudio. Cómo fomentar el uso responsable evaluando el prompt, verificando la información y asegurando la autoría personal del alumno. Cuándo decir 'NO' si la IA sustituye el razonamiento del niño.",
-                videoUrl: "#",
+                title: "Herramientas de IA",
+                description: "Guía práctica sobre Gemini y NotebookLM para el estudio. Cómo fomentar el uso responsable evaluando el prompt, verificando la información y asegurando la autoría personal del alumno.",
+                videoUrl: "https://youtu.be/KPOCfWGXVnk",
                 pdfUrl: "#",
                 questions: [
                     {
@@ -964,17 +964,37 @@
                             "Si el profesor no se da cuenta, está bien."
                         ],
                         correct: 1
+                    }
+                ]
+            },
+            {
+                id: 4,
+                title: "Cómo acompañar a nuestros hijos",
+                description: "Estrategias para padres sobre el acompañamiento en la era digital. Cómo establecer límites saludables, fomentar la curiosidad ética y ser el guía que necesitan en el uso de nuevas tecnologías.",
+                videoUrl: "https://youtu.be/JV9fXmDY47A",
+                pdfUrl: "#",
+                questions: [
+                    {
+                        type: "choice",
+                        text: "¿Cuál es el rol principal de la familia en el uso de la IA por parte de los hijos?",
+                        options: [
+                            "Ser expertos tecnológicos que solucionen todos los fallos.",
+                            "Ser guías éticos que supervisen el criterio y la autoría.",
+                            "Estar siempre presentes físicamente mientras usan el ordenador.",
+                            "Prohibir el uso hasta que sean mayores de edad."
+                        ],
+                        correct: 1
                     },
                     {
                         type: "scenario",
-                        text: "SITUACIÓN: Tu hijo quiere usar IA para resolver problemas de matemáticas porque 'así acaba antes'. Sabes que no ha entendido el tema de clase. ¿Qué haces?",
+                        text: "SITUACIÓN: Tu hijo quiere usar IA para resolver ejercicios porque 'así acaba antes'. Sabes que no ha entendido el tema. ¿Qué haces?",
                         options: [
                             "Dejarle que lo haga, así tiene más tiempo para descansar.",
-                            "Hacérselos tú mismo para que aprenda el método.",
-                            "Decir NO: explicar que si la IA sustituye el razonamiento, él no está aprendiendo la competencia necesaria para el examen y el futuro.",
-                            "Obligarle a usar una calculadora vieja."
+                            "Decir NO: explicar que si la IA sustituye el razonamiento, él no está aprendiendo.",
+                            "Hacérselos tú mismo para ir más rápido.",
+                            "Obligarle a usar una calculadora vieja de castigo."
                         ],
-                        correct: 2
+                        correct: 1
                     }
                 ]
             }
@@ -996,13 +1016,29 @@
             const list = document.getElementById('pildoras-list');
             list.innerHTML = modules.map((m, index) => {
                 const isCompleted = userProgress.completedModules.includes(m.id);
+                let videoHTML = `
+                    <div class="video-placeholder">
+                        <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
+                        <span>Video Píldora ${m.id}</span>
+                    </div>
+                `;
+
+                if (m.videoUrl && m.videoUrl !== "#") {
+                    const videoId = m.videoUrl.split('/').pop().split('?')[0].split('=').pop();
+                    videoHTML = `
+                        <iframe 
+                            src="https://www.youtube.com/embed/${videoId}" 
+                            style="position:absolute;top:0;left:0;width:100%;height:100%;border:0;" 
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+                            allowfullscreen>
+                        </iframe>
+                    `;
+                }
+
                 return `
                     <div class="pildora-card animate-fade delay-${(index % 3) + 1}">
                         <div class="video-wrapper">
-                            <div class="video-placeholder">
-                                <svg width="48" height="48" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><polygon points="5 3 19 12 5 21 5 3"></polygon></svg>
-                                <span>Video Píldora ${m.id}</span>
-                            </div>
+                            ${videoHTML}
                         </div>
                         <div class="pildora-info">
                             <h2>${m.id}. ${m.title}</h2>
